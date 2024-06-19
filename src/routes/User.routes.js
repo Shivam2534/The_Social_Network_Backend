@@ -4,6 +4,7 @@ import {
   loginUser,
   searchbar,
   getUserById,
+  updateCurrentUserDetails,
 } from "../controllers/User.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/Auth.middleware.js";
@@ -14,5 +15,6 @@ router.route("/signupnewuser").post(upload.single("avatar"), SignUpNewUser);
 router.route("/loginuser").post(loginUser);
 router.route("/searchbar").post(verifyJWT, searchbar);
 router.route("/:userId").get(verifyJWT, getUserById);
+router.route("/edit").post(verifyJWT, updateCurrentUserDetails);
 
 export default router;

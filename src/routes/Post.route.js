@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateNewPost, SendNewPosts,CurrentUserPost } from "../controllers/Post.controller.js";
+import { CreateNewPost, SendNewPosts,CurrentUserPost,DeletePost } from "../controllers/Post.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/Auth.middleware.js";
 const router = Router();
@@ -10,5 +10,6 @@ router
 
 router.route("/findnewposts").get(verifyJWT, SendNewPosts);
 router.route("/CurrentUserPost").get(verifyJWT, CurrentUserPost);
+router.route("/deletepost").post(verifyJWT, DeletePost);
 
 export default router;

@@ -87,4 +87,28 @@ const CurrentUserPost = asyncHandler(async (req, res) => {
     .json(new apiResponse(200, CurrUserPosts, "Post of current user"));
 });
 
-export { CreateNewPost, SendNewPosts, CurrentUserPost };
+const DeletePost = asyncHandler(async (req, res) => {
+  const { postIdToDelete } = req.body;
+
+  const post = await Post.findByIdAndDelete(postIdToDelete);
+  if (!post) {
+    return res
+      .status(404)
+      .json(new apiResponse(404, {}, "No post found with this ID"));
+  }
+
+  const user = await User.findById(req.user?._id);
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.posts = user.posts.filter(
+    (post) => post.toString() !== postIdToDelete.toString()
+  );
+  await user.save();
+
+  console.log("post deleted successfully from backend");
+  res.status(200).json(new apiResponse(200, {}, "Post deleted successfully"));
+});
+
+export { CreateNewPost, SendNewPosts, CurrentUserPost, DeletePost };

@@ -150,7 +150,7 @@ const searchbar = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
   try {
     const userId = req.params.userId;
-    console.log(userId)
+    console.log(userId);
     // Find the user by ID
     const user = await User.findById(userId);
 
@@ -178,4 +178,38 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-export { SignUpNewUser, loginUser, searchbar, getUserById };
+const updateCurrentUserDetails = asyncHandler(async (req, res) => {
+  const { username, fullname, email } = req.body;
+
+  const CurrentUser = await User.findById(req.user?._id).select(
+    "-password,-refreshToken"
+  );
+
+  if (!CurrentUser) {
+    res.status(404).json(new apiResponse(404, {}, "User Not found"));
+  }
+
+  if (username) {
+    CurrentUser.username = CurrentUser.username = username;
+  }
+  if (fullname) {
+    CurrentUser.fullname = CurrentUser.fullname = fullname;
+  }
+  if (email) {
+    CurrentUser.email = CurrentUser.email = email;
+  }
+
+  await CurrentUser.save();
+
+  return res
+    .status(200)
+    .json(new apiResponse(200, CurrentUser, "User Data Updated Successfully"));
+});
+
+export {
+  SignUpNewUser,
+  loginUser,
+  searchbar,
+  getUserById,
+  updateCurrentUserDetails,
+};
