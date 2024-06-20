@@ -71,3 +71,19 @@ Follow these steps to set up and run the project locally.
   npm run dev
   ```
 
+3. **Demo Accounts**
+    ```sh
+   -  fisrt account
+   1. usermame - shivam_iitr
+   2. email- shivamkanchole2002@gmail.com
+   3. pass - 12345
+    ```
+
+   ```sh
+   -  second account
+   1. usermame - lalu_iitr
+   2. email- lalu@gmail.com
+   3. pass - 12345
+   ```
+
+
