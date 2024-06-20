@@ -35,8 +35,8 @@ Follow these steps to set up and run the project locally.
 
    ```sh
 
-   https://github.com/Shivam2534/The_Social_Network_Frontend.git
-
+     https://github.com/Shivam2534/The_Social_Network_Frontend.git
+   
    - Install dependencies: npm install
 
    - run the frontend: npm run dev
