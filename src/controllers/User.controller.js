@@ -4,6 +4,7 @@ import { apiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { UploadOnCloudinary } from "../utils/Cloudinary.js";
 import { Post } from "../models/Post.model.js";
+import { response } from "express";
 
 const SignUpNewUser = asyncHandler(async (req, res) => {
   const { username, fullname, email, password } = req.body;
@@ -190,13 +191,13 @@ const updateCurrentUserDetails = asyncHandler(async (req, res) => {
   }
 
   if (username) {
-    CurrentUser.username =  username;
+    CurrentUser.username = username;
   }
   if (fullname) {
-    CurrentUser.fullname =  fullname;
+    CurrentUser.fullname = fullname;
   }
   if (email) {
-    CurrentUser.email =  email;
+    CurrentUser.email = email;
   }
 
   await CurrentUser.save();
@@ -206,10 +207,30 @@ const updateCurrentUserDetails = asyncHandler(async (req, res) => {
     .json(new apiResponse(200, CurrentUser, "User Data Updated Successfully"));
 });
 
+const latestDataOfCurrentUser = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    
+    const user1 = await User.findById(userId);
+
+    if (!user1) {
+      return res.status(404).json(new apiResponse(404, {}, "User Not Found"));
+    }
+
+    return res
+      .status(200)
+      .json(new apiResponse(200, user1, "User profile fetched successfully"));
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 export {
   SignUpNewUser,
   loginUser,
   searchbar,
   getUserById,
   updateCurrentUserDetails,
+  latestDataOfCurrentUser,
 };
