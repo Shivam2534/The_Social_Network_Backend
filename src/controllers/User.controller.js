@@ -33,7 +33,7 @@ const SignUpNewUser = asyncHandler(async (req, res) => {
 
   const user = await User.create({
     fullname,
-    username: username.toLowerCase(),
+    username,
     email,
     password,
     avatar: avatar.url,
@@ -190,13 +190,13 @@ const updateCurrentUserDetails = asyncHandler(async (req, res) => {
   }
 
   if (username) {
-    CurrentUser.username = CurrentUser.username = username;
+    CurrentUser.username =  username;
   }
   if (fullname) {
-    CurrentUser.fullname = CurrentUser.fullname = fullname;
+    CurrentUser.fullname =  fullname;
   }
   if (email) {
-    CurrentUser.email = CurrentUser.email = email;
+    CurrentUser.email =  email;
   }
 
   await CurrentUser.save();
